@@ -57,12 +57,7 @@ def start():
 def getData(table_name):
     flushTable()
 
-    cnx = mysql.connector.connect(
-        host="localhost",
-        user=userCred[0],
-        password=userCred[1],
-        database='taskapp'
-    )
+    cnx = getcnx()
     cursor=cnx.cursor()
 
 
@@ -178,12 +173,7 @@ def addTask():
     VALUES ('{name}','{desc}','{status}','{priority}')'''
 
 
-    cnx = mysql.connector.connect(
-        host="localhost",
-        user=userCred[0],
-        password=userCred[1],
-        database='taskapp'
-    )
+    cnx = getcnx()
 
     cursor=cnx.cursor()
     cursor.execute(addtaskQuery)
@@ -201,12 +191,7 @@ def delTask():
     
     print(f'{table}\n\n\n')
 
-    cnx = mysql.connector.connect(
-        host="localhost",
-        user=userCred[0],
-        password=userCred[1],
-        database='taskapp'
-    )
+    cnx = getcnx()
     cursor=cnx.cursor()
     data=getData(utable)[1]
     taskIDList=[]
@@ -242,12 +227,7 @@ def updTask():
     
     print(f'{table}\n\n\n')
 
-    cnx = mysql.connector.connect(
-        host="localhost",
-        user=userCred[0],
-        password=userCred[1],
-        database='taskapp'
-    )
+    cnx = getcnx()
     cursor=cnx.cursor()
 
     data=getData(utable)[1]
@@ -303,12 +283,7 @@ def exitChk(userStr):
         return
 
 def flushTable():
-    cnx = mysql.connector.connect(
-        host="localhost",
-        user=userCred[0],
-        password=userCred[1],
-        database='taskapp'
-    )
+    cnx=getcnx()
     cursor=cnx.cursor()
     
     flushQuery=f'''
@@ -320,6 +295,15 @@ def flushTable():
     cursor.execute(flushQuery)
     cursor.close()
     cnx.close()
+
+def getcnx():
+    cnx = mysql.connector.connect(
+        host="localhost",
+        user=userCred[0],
+        password=userCred[1],
+        database='taskapp'
+    )
+    return cnx
 
 #User Credentials: [userName,userPass,userTable]
 userCred=[]
