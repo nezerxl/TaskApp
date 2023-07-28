@@ -320,12 +320,14 @@ def flushTable():
         database='taskapp'
     )
     cursor=cnx.cursor()
-
-    cursor.execute(f'ALTER TABLE {userCred[2]} AUTO_INCREMENT = 1;')
-    cursor.execute(f'SET @counter = 0;')
-    cursor.execute(f'UPDATE {userCred[2]} SET taskid = @counter:=@counter + 1;')
-    cursor.execute(f'ALTER TABLE {userCred[2]} MODIFY Taskid INT AUTO_INCREMENT;')
-
+    
+    flushQuery=f'''
+    ALTER TABLE {userCred[2]} AUTO_INCREMENT = 1
+    SET @counter = 0
+    UPDATE {userCred[2]} SET taskid = @counter:=@counter + 1
+    'ALTER TABLE {userCred[2]} MODIFY Taskid INT AUTO_INCREMENT;
+    '''
+    cursor.execute(flushQuery)
     cursor.close()
     cnx.close()
 
