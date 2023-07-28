@@ -86,16 +86,6 @@ def getData(table_name):
     return ((headers,data))
 
 def prettyTable(headers, data):
-    """
-    Creates a pretty table using only built-in functions and libraries.
-    
-    Arguments:
-    - headers: A list of strings representing the table headers.
-    - data: A list of lists, where each inner list represents a row in the table.
-    
-    Returns:
-    - A string containing the formatted table.
-    """ 
     # Determine the maximum width of each column
     column_widths = [max(map(len, column)) for column in zip(headers, *data)]
     
@@ -322,10 +312,10 @@ def flushTable():
     cursor=cnx.cursor()
     
     flushQuery=f'''
-    ALTER TABLE {userCred[2]} AUTO_INCREMENT = 1
-    SET @counter = 0
-    UPDATE {userCred[2]} SET taskid = @counter:=@counter + 1
-    'ALTER TABLE {userCred[2]} MODIFY Taskid INT AUTO_INCREMENT;
+    ALTER TABLE {userCred[2]} AUTO_INCREMENT = 1;
+    SET @counter = 0;
+    UPDATE {userCred[2]} SET taskid = @counter:=@counter + 1;
+    ALTER TABLE {userCred[2]} MODIFY Taskid INT AUTO_INCREMENT;
     '''
     cursor.execute(flushQuery)
     cursor.close()
